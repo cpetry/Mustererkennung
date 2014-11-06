@@ -47,9 +47,6 @@
     <ClInclude Include="preprocessing.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="CameraVideoSurface.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="main_GUI.ui">

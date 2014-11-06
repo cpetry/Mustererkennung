@@ -7,12 +7,9 @@
 #include "main_gui.h"
 #include <QtGui/QWindow>
 #include <QtWidgets/QFileDialog>
-#include <QtMultimedia/QtMultimedia>
-#include <QtMultimediaWidgets/QtMultimediaWidgets>
 
 //#include "ppmFileThread.h"
 #include "preprocessing.h"
-#include "CameraVideoSurface.h"
 #include <chrono>
 #include <QtGui\QImageReader>
 #include <QtCore\QDebug>
@@ -64,7 +61,6 @@ main_GUI::main_GUI(){
 	slot_filterChanged("Mittelwert");
 
 	connect(ui.btn_choose, &QPushButton::clicked, this, &main_GUI::slot_chooseFile);
-	connect(ui.btn_startCamera, &QPushButton::clicked, this, &main_GUI::slot_startCamera);
 	connect(ui.lineEdit_filename, &QLineEdit::editingFinished, this, &main_GUI::slot_editingFilenameFinished);
 	connect(ui.sb_morph_size, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &main_GUI::slot_spinBoxValueChanged);
 	connect(ui.cb_filter, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &main_GUI::slot_filterChanged);

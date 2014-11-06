@@ -44,11 +44,8 @@ public:
     QLabel *lbl_file;
     QLineEdit *lineEdit_filename;
     QPushButton *btn_choose;
-    QHBoxLayout *horizontalLayout_12;
-    QSpacerItem *horizontalSpacer_3;
-    QPushButton *btn_startCamera;
-    QSpacerItem *horizontalSpacer_2;
     QHBoxLayout *horizontalLayout_10;
+    QSpacerItem *horizontalSpacer_4;
     QLabel *label_4;
     QLineEdit *lineEdit_dimensionsX;
     QLabel *label_5;
@@ -80,8 +77,10 @@ public:
     QSpinBox *sb_32;
     QWidget *page_2;
     QHBoxLayout *horizontalLayout_11;
+    QSpacerItem *horizontalSpacer_2;
     QLabel *label;
     QSpinBox *sb_morph_size;
+    QSpacerItem *horizontalSpacer_3;
     QWidget *Pictures;
     QHBoxLayout *horizontalLayout_2;
     QWidget *LeftSIde;
@@ -148,34 +147,20 @@ public:
 
         btn_choose = new QPushButton(groupBox);
         btn_choose->setObjectName(QStringLiteral("btn_choose"));
+        btn_choose->setMaximumSize(QSize(50, 16777215));
 
         horizontalLayout_7->addWidget(btn_choose);
 
 
         verticalLayout_5->addLayout(horizontalLayout_7);
 
-        horizontalLayout_12 = new QHBoxLayout();
-        horizontalLayout_12->setSpacing(6);
-        horizontalLayout_12->setObjectName(QStringLiteral("horizontalLayout_12"));
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_12->addItem(horizontalSpacer_3);
-
-        btn_startCamera = new QPushButton(groupBox);
-        btn_startCamera->setObjectName(QStringLiteral("btn_startCamera"));
-
-        horizontalLayout_12->addWidget(btn_startCamera);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_12->addItem(horizontalSpacer_2);
-
-
-        verticalLayout_5->addLayout(horizontalLayout_12);
-
         horizontalLayout_10 = new QHBoxLayout();
         horizontalLayout_10->setSpacing(6);
         horizontalLayout_10->setObjectName(QStringLiteral("horizontalLayout_10"));
+        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_10->addItem(horizontalSpacer_4);
+
         label_4 = new QLabel(groupBox);
         label_4->setObjectName(QStringLiteral("label_4"));
         label_4->setMaximumSize(QSize(100, 16777215));
@@ -185,7 +170,7 @@ public:
         lineEdit_dimensionsX = new QLineEdit(groupBox);
         lineEdit_dimensionsX->setObjectName(QStringLiteral("lineEdit_dimensionsX"));
         lineEdit_dimensionsX->setEnabled(false);
-        lineEdit_dimensionsX->setMaximumSize(QSize(80, 16777215));
+        lineEdit_dimensionsX->setMaximumSize(QSize(60, 16777215));
         lineEdit_dimensionsX->setReadOnly(true);
 
         horizontalLayout_10->addWidget(lineEdit_dimensionsX);
@@ -198,7 +183,7 @@ public:
         lineEdit_dimensionsY = new QLineEdit(groupBox);
         lineEdit_dimensionsY->setObjectName(QStringLiteral("lineEdit_dimensionsY"));
         lineEdit_dimensionsY->setEnabled(false);
-        lineEdit_dimensionsY->setMaximumSize(QSize(80, 16777215));
+        lineEdit_dimensionsY->setMaximumSize(QSize(60, 16777215));
         lineEdit_dimensionsY->setReadOnly(true);
 
         horizontalLayout_10->addWidget(lineEdit_dimensionsY);
@@ -404,6 +389,10 @@ public:
         horizontalLayout_11->setSpacing(6);
         horizontalLayout_11->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_11->addItem(horizontalSpacer_2);
+
         label = new QLabel(page_2);
         label->setObjectName(QStringLiteral("label"));
         label->setMaximumSize(QSize(50, 16777215));
@@ -423,8 +412,12 @@ public:
 
         horizontalLayout_11->addWidget(sb_morph_size);
 
-        horizontalLayout_11->setStretch(0, 1);
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_11->addItem(horizontalSpacer_3);
+
         horizontalLayout_11->setStretch(1, 1);
+        horizontalLayout_11->setStretch(2, 1);
         sw_options_stacked_widget->addWidget(page_2);
 
         verticalLayout_7->addWidget(sw_options_stacked_widget);
@@ -596,8 +589,7 @@ public:
         main_GUI->setWindowTitle(QApplication::translate("main_GUI", "Qt5Test2", 0));
         groupBox->setTitle(QApplication::translate("main_GUI", "File to Load", 0));
         lbl_file->setText(QApplication::translate("main_GUI", "File:", 0));
-        btn_choose->setText(QApplication::translate("main_GUI", "Choose", 0));
-        btn_startCamera->setText(QApplication::translate("main_GUI", "Start Camera", 0));
+        btn_choose->setText(QApplication::translate("main_GUI", "...", 0));
         label_4->setText(QApplication::translate("main_GUI", "Dimensions:", 0));
         label_5->setText(QApplication::translate("main_GUI", "x", 0));
         groupBox_2->setTitle(QApplication::translate("main_GUI", "Options", 0));
