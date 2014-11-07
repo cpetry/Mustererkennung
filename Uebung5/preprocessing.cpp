@@ -1,8 +1,8 @@
 #include <omp.h>
 #include "preprocessing.h"
 
-bool ascending(int i, int j) { return i > j; }
-bool descending(int i, int j) { return i < j; }
+bool ascending(int i, int j) { return i < j; }
+bool descending(int i, int j) { return i > j; }
 
 QImage preprocessing::applyConvolution(QImage img, matrix<int> m, float div){
 	QImage newimg(img.width(), img.height(), QImage::Format::Format_RGB888);
@@ -54,7 +54,7 @@ QImage preprocessing::applyMorphologicOperation(QImage img, QString type, int si
 			else if (type == "Median")
 				v = list[((size*size)-1)/2];
 			else if (type == "Kantenfilter")
-				v = std::min(std::max(list[(size*size) - 1] - list[0], 0), 255);
+				v = std::min(std::max(list[(size*size)-1] - list[0], 0), 255);
 
 			newimg.setPixel(x, y, qRgb(v, v, v));
 		}
