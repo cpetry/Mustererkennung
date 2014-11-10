@@ -25,7 +25,7 @@ int main(int argc, char** argv){
 
 	qt_app.setWindowIcon(QIcon(path));
 
-	qt_app.addLibraryPath("../Qt5"); // to load jpeg files (imageformats)
+	qt_app.addLibraryPath("Qt5"); // to load jpeg files (imageformats)
 
 	main_GUI window;
 	window.show();

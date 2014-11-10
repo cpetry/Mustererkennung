@@ -166,16 +166,20 @@ void main_GUI::slot_spinBoxValueChanged(int i){
 }
 
 
+
+
 void main_GUI::slot_startEncodingPicture(){
 	ui.statusBar->showMessage("Using Filter...");
 	encoder_begin = std::chrono::steady_clock::now();
 
-	QString type = ui.cb_filter->currentText();
-	if (type == "Mittelwert"
-		|| type == "Gauss"
-		|| type == "Sobel hori"
-		|| type == "Sobel vert"
-		|| type == "CUSTOM"){
+	QString text_type = ui.cb_filter->currentText();
+	preprocessing::PreproType type = preprocessing::getTypeEnum(text_type);
+
+	if (type == preprocessing::MITTELWERT
+		|| type == preprocessing::GAUSS
+		|| type == preprocessing::SOBEL_HORI
+		|| type == preprocessing::SOBEL_VERT
+		|| type == preprocessing::CUSTOM){
 	
 		matrix<int> m(3, 3);
 		m(0, 0) = this->ui.sb_11->value();
@@ -191,13 +195,13 @@ void main_GUI::slot_startEncodingPicture(){
 		float div = 1.0 * this->ui.sb_div1->value() / (1.0 * this->ui.sb_div2->value());
 		this->right_image = preprocessing::applyConvolution(this->left_image, m, div);
 	}
-	else if (type == "Schliessung"){
-		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, "Dilatation", ui.sb_morph_size->value());
-		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, "Erosion", ui.sb_morph_size->value());
+	else if (type == preprocessing::SCHLIESSUNG){
+		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::DILATATION, ui.sb_morph_size->value());
+		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::EROSION, ui.sb_morph_size->value());
 	}
-	else if (type == "Oeffnung"){
-		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, "Erosion", ui.sb_morph_size->value());
-		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, "Dilatation", ui.sb_morph_size->value());
+	else if (type == preprocessing::OEFFNUNG){
+		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::EROSION, ui.sb_morph_size->value());
+		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::DILATATION, ui.sb_morph_size->value());
 	}
 	else{
 		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, type, ui.sb_morph_size->value());
