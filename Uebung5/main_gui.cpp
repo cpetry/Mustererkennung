@@ -209,6 +209,10 @@ void main_GUI::slot_startEncodingPicture(){
 	QString text_type = ui.cb_filter->currentText();
 	preprocessing::PreproType type = preprocessing::getTypeEnum(text_type);
 
+
+	matrix<int> matrix_S = zero_matrix<int>(ui.sb_morph_size->value(), ui.sb_morph_size->value()); // insert S-Matrix here.... or somewhere else
+
+
 	if (type == preprocessing::MITTELWERT
 		|| type == preprocessing::GAUSS
 		|| type == preprocessing::SOBEL_HORI
@@ -230,12 +234,12 @@ void main_GUI::slot_startEncodingPicture(){
 		this->right_image = preprocessing::applyConvolution(this->left_image, m, div);
 	}
 	else if (type == preprocessing::SCHLIESSUNG){
-		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::DILATATION, ui.sb_morph_size->value());
-		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::EROSION, ui.sb_morph_size->value());
+		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::DILATATION, ui.sb_morph_size->value(), matrix_S);
+		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::EROSION, ui.sb_morph_size->value(), matrix_S);
 	}
 	else if (type == preprocessing::OEFFNUNG){
-		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::EROSION, ui.sb_morph_size->value());
-		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::DILATATION, ui.sb_morph_size->value());
+		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::EROSION, ui.sb_morph_size->value(), matrix_S);
+		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::DILATATION, ui.sb_morph_size->value(), matrix_S);
 	}
 	else{
 		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, type, ui.sb_morph_size->value());

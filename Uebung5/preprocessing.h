@@ -1,6 +1,8 @@
 
 #include <QtWidgets/QMainWindow>
 #include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/io.hpp>
+
 using namespace boost::numeric::ublas;
 
 class preprocessing
@@ -50,5 +52,5 @@ public:
 
 	static QImage applyConvolution(QImage img, matrix<int> m, float div);
 
-	static QImage applyMorphologicOperation(QImage img, PreproType type, int size);
+	static QImage applyMorphologicOperation(QImage img, PreproType type, int size = 7, matrix<int> S = zero_matrix<int>(7, 7));
 };

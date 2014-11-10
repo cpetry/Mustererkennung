@@ -24,7 +24,7 @@ QImage preprocessing::applyConvolution(QImage img, matrix<int> m, float div){
 	return newimg;
 }
 
-QImage preprocessing::applyMorphologicOperation(QImage img, PreproType type, int size){
+QImage preprocessing::applyMorphologicOperation(QImage img, PreproType type, bool binary, int size, matrix<int> S){
 	QImage newimg(img.width(), img.height(), QImage::Format::Format_RGB888);
 	int half_size = size / 2;
 
@@ -46,7 +46,8 @@ QImage preprocessing::applyMorphologicOperation(QImage img, PreproType type, int
 
 				if (type == PreproType::MEDIAN)
 					list[(yf + half_size)*size + xf + half_size] = qRed(img.pixel(posx, posy)); // add to list
-				int value = qRed(img.pixel(posx, posy));
+				int value = qRed(img.pixel(posx, posy)) - S((yf + half_size), xf + half_size);
+
 				v_min = std::min(v_min, value); // Minimum
 				v_max = std::max(v_max, value); // Maximum
 			}
