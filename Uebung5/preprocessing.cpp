@@ -54,8 +54,10 @@ QImage preprocessing::applyMorphologicOperation(QImage img, PreproType type, int
 			
 			if (type == PreproType::EROSION)
 				newimg.setPixel(x, y, qRgb(v_min, v_min, v_min));
+
 			else if (type == PreproType::DILATATION)
 				newimg.setPixel(x, y, qRgb(v_max, v_max, v_max));
+
 			else if (type == PreproType::MEDIAN){
 				std::sort(list.begin(), list.end(), ascending);
 				float v = list[((size*size) - 1) / 2];
