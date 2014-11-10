@@ -90,13 +90,17 @@ public:
     QPushButton *btn_loadPPM;
     QLabel *lbl_filesize_load;
     QLineEdit *lineEdit_filesize_load;
+    QSpacerItem *horizontalSpacer_5;
+    QPushButton *btn_pop;
     QVBoxLayout *left_PicFrame;
     QLabel *leftPicture;
     QWidget *RightSide;
     QVBoxLayout *verticalLayout_3;
     QWidget *header_right;
     QHBoxLayout *horizontalLayout_4;
-    QPushButton *btn_Encode;
+    QPushButton *btn_push;
+    QSpacerItem *horizontalSpacer_6;
+    QPushButton *btn_apply;
     QVBoxLayout *right_PicFrame;
     QLabel *rightPicture;
     QStatusBar *statusBar;
@@ -105,7 +109,7 @@ public:
     {
         if (main_GUI->objectName().isEmpty())
             main_GUI->setObjectName(QStringLiteral("main_GUI"));
-        main_GUI->resize(590, 477);
+        main_GUI->resize(737, 550);
         centralWidget = new QWidget(main_GUI);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -478,7 +482,7 @@ public:
 
         lbl_filesize_load = new QLabel(header_left);
         lbl_filesize_load->setObjectName(QStringLiteral("lbl_filesize_load"));
-        lbl_filesize_load->setMinimumSize(QSize(100, 0));
+        lbl_filesize_load->setMinimumSize(QSize(50, 0));
         lbl_filesize_load->setMaximumSize(QSize(100, 16777215));
         lbl_filesize_load->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
@@ -491,6 +495,17 @@ public:
         lineEdit_filesize_load->setReadOnly(true);
 
         horizontalLayout_3->addWidget(lineEdit_filesize_load);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_3->addItem(horizontalSpacer_5);
+
+        btn_pop = new QPushButton(header_left);
+        btn_pop->setObjectName(QStringLiteral("btn_pop"));
+        sizePolicy4.setHeightForWidth(btn_pop->sizePolicy().hasHeightForWidth());
+        btn_pop->setSizePolicy(sizePolicy4);
+
+        horizontalLayout_3->addWidget(btn_pop);
 
 
         verticalLayout_2->addWidget(header_left);
@@ -534,12 +549,23 @@ public:
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         horizontalLayout_4->setContentsMargins(10, 0, 10, 0);
-        btn_Encode = new QPushButton(header_right);
-        btn_Encode->setObjectName(QStringLiteral("btn_Encode"));
-        sizePolicy4.setHeightForWidth(btn_Encode->sizePolicy().hasHeightForWidth());
-        btn_Encode->setSizePolicy(sizePolicy4);
+        btn_push = new QPushButton(header_right);
+        btn_push->setObjectName(QStringLiteral("btn_push"));
+        sizePolicy4.setHeightForWidth(btn_push->sizePolicy().hasHeightForWidth());
+        btn_push->setSizePolicy(sizePolicy4);
 
-        horizontalLayout_4->addWidget(btn_Encode);
+        horizontalLayout_4->addWidget(btn_push);
+
+        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_4->addItem(horizontalSpacer_6);
+
+        btn_apply = new QPushButton(header_right);
+        btn_apply->setObjectName(QStringLiteral("btn_apply"));
+        sizePolicy4.setHeightForWidth(btn_apply->sizePolicy().hasHeightForWidth());
+        btn_apply->setSizePolicy(sizePolicy4);
+
+        horizontalLayout_4->addWidget(btn_apply);
 
 
         verticalLayout_3->addWidget(header_right);
@@ -599,8 +625,10 @@ public:
         label->setText(QApplication::translate("main_GUI", "Size", 0));
         btn_loadPPM->setText(QApplication::translate("main_GUI", "Load", 0));
         lbl_filesize_load->setText(QApplication::translate("main_GUI", "File size:", 0));
+        btn_pop->setText(QApplication::translate("main_GUI", ">> Pop ", 0));
         leftPicture->setText(QString());
-        btn_Encode->setText(QApplication::translate("main_GUI", "Apply", 0));
+        btn_push->setText(QApplication::translate("main_GUI", "<< Push", 0));
+        btn_apply->setText(QApplication::translate("main_GUI", "Apply", 0));
         rightPicture->setText(QString());
     } // retranslateUi
 

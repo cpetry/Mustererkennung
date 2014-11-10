@@ -17,7 +17,8 @@ public:
 		MEDIAN,
 		KANTENFILTER,
 		SCHLIESSUNG,
-		OEFFNUNG
+		OEFFNUNG,
+		ERROR
 	};
 
 	static preprocessing::PreproType getTypeEnum(QString text_type){
@@ -35,10 +36,16 @@ public:
 			return preprocessing::EROSION;
 		else if (text_type == "Dilatation")
 			return preprocessing::DILATATION;
+		else if (text_type == "Median")
+			return preprocessing::MEDIAN; 
+		else if (text_type == "Kantenfilter")
+			return preprocessing::KANTENFILTER; 
 		else if (text_type == "Schliessung")
 			return preprocessing::SCHLIESSUNG;
 		else if (text_type == "Oeffnung")
 			return preprocessing::OEFFNUNG;
+		else
+			return preprocessing::ERROR;
 	}
 
 	static QImage applyConvolution(QImage img, matrix<int> m, float div);

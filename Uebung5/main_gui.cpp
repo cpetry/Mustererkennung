@@ -23,7 +23,7 @@ main_GUI::main_GUI(){
 
 	//At first disable Load and Encode button
 	this->ui.btn_loadPPM->setDisabled(true);
-	this->ui.btn_Encode->setDisabled(true);
+	this->ui.btn_apply->setDisabled(true);
 
 	
 	leftView.setParent(ui.leftPicture);
@@ -61,15 +61,20 @@ main_GUI::main_GUI(){
 	slot_filterChanged("Mittelwert");
 
 	connect(ui.btn_choose, &QPushButton::clicked, this, &main_GUI::slot_chooseFile);
+	connect(ui.btn_push, &QPushButton::clicked, this, &main_GUI::slot_pushFilter);
+	connect(ui.btn_pop, &QPushButton::clicked, this, &main_GUI::slot_popFilter);
 	connect(ui.lineEdit_filename, &QLineEdit::editingFinished, this, &main_GUI::slot_editingFilenameFinished);
 	connect(ui.sb_morph_size, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &main_GUI::slot_spinBoxValueChanged);
 	connect(ui.cb_filter, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &main_GUI::slot_filterChanged);
 	connect(ui.btn_loadPPM, &QPushButton::clicked, this, &main_GUI::slot_loadPicture);
-	connect(ui.btn_Encode, &QPushButton::clicked, this, &main_GUI::slot_startEncodingPicture);
+	connect(ui.btn_apply, &QPushButton::clicked, this, &main_GUI::slot_startEncodingPicture);
 
 	QDir solution = QDir::current();
 	this->ui.lineEdit_filename->setText(QString(solution.absolutePath() + "/_resources/lena.png"));
 	slot_editingFilenameFinished();
+
+	this->ui.btn_pop->setEnabled(false);
+	this->ui.btn_push->setEnabled(false);
 }
 
 void main_GUI::slot_chooseFile(){
@@ -143,6 +148,10 @@ void main_GUI::slot_loadPicture(){
 	this->leftView.scaleToFit(false);
 	leftView.resize(ui.leftPicture->size());
 	
+	while (!img_stack.empty())
+		img_stack.pop();
+
+	img_stack.push(left_image);
 
 	int filesize = QFile(ui.lineEdit_filename->text()).size();
 	QString size;
@@ -156,7 +165,7 @@ void main_GUI::slot_loadPicture(){
 	this->ui.lineEdit_dimensionsX->setText(QString::number(left_pixmap.width()));
 	this->ui.lineEdit_dimensionsY->setText(QString::number(left_pixmap.height()));
 
-	this->ui.btn_Encode->setEnabled(true);
+	this->ui.btn_apply->setEnabled(true);
 
 	this->slot_startEncodingPicture();
 }
@@ -165,8 +174,33 @@ void main_GUI::slot_spinBoxValueChanged(int i){
 	this->slot_startEncodingPicture();
 }
 
+void main_GUI::slot_popFilter(){
+	img_stack.pop();
+	if (img_stack.size() >= 1){
+		left_image = img_stack.top();
+		this->left_pixmap = QPixmap::fromImage(left_image);
+		this->leftView.setPixmap(this->left_pixmap);
+		this->leftView.show();
+		this->leftView.scaleToFit(false);
+		leftView.resize(ui.leftPicture->size());
+		if (img_stack.size() == 1)
+			this->ui.btn_pop->setDisabled(true);
+	}
+	slot_startEncodingPicture();
+}
 
+void main_GUI::slot_pushFilter(){
+	img_stack.push(right_image);
 
+	left_image = img_stack.top();
+	this->left_pixmap = QPixmap::fromImage(left_image);
+	this->leftView.setPixmap(this->left_pixmap);
+	this->leftView.show();
+	this->leftView.scaleToFit(false);
+	leftView.resize(ui.leftPicture->size());
+
+	this->ui.btn_pop->setEnabled(true);
+}
 
 void main_GUI::slot_startEncodingPicture(){
 	ui.statusBar->showMessage("Using Filter...");
@@ -216,6 +250,8 @@ void main_GUI::slot_startEncodingPicture(){
 
 	std::chrono::duration<double> elapsed_seconds = (std::chrono::steady_clock::now() - encoder_begin);
 	ui.statusBar->showMessage("Time needed: " + QString::number(elapsed_seconds.count()*1000) + "ms");
+
+	this->ui.btn_push->setEnabled(true);
 }
 
 

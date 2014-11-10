@@ -7,7 +7,7 @@
 #pragma once
 
 #include <chrono>
-
+#include <stack>
 #include <QtWidgets/QMainWindow>
 #include <boost/optional/optional.hpp>
 
@@ -44,6 +44,7 @@ private:
 	/** loader for encoding the file */
     //encodeThread* encoder;
 	/** QImages that get shown after transforming them (i.e. scale) */
+	std::stack<QImage> img_stack;
 	QImage left_image, right_image;
 	/** QPixmap that get shown as labels */
 	QPixmap left_pixmap, right_pixmap;
@@ -83,6 +84,9 @@ private slots:
 	void slot_startCamera();
 
 	void slot_spinBoxValueChanged(int i);
+
+	void slot_pushFilter();
+	void slot_popFilter();
 
 	void slot_loadPicture();
 
