@@ -1,8 +1,8 @@
 /**
- * @Copyright   2013
- * @Author  Matthias Karl, Hufnagel Stefan, Petry Christian
- * @FHWS
- */
+* @Copyright   2014
+* @Author  Petry Christian
+* @FHWS
+*/
 
 #pragma once
 
@@ -56,6 +56,7 @@ private:
     //picture pic;
 
 	void setfilter(int values[9], int div[2], bool readonly);
+	
 
 	std::chrono::system_clock::time_point encoder_begin, loader_begin;
 public slots:
@@ -65,7 +66,16 @@ public slots:
      * @param	encodeThread::result		result of the encode process
      */
 	//void slot_getEncodingResult(encodeThread::result r);
+	void resizeEvent(QResizeEvent* event)
+	{
+		this->leftView.show();
+		this->leftView.scaleToFit(false);
+		leftView.resize(ui.leftPicture->size());
 
+		this->rightView.show();
+		this->rightView.scaleToFit(false);
+		rightView.resize(ui.rightPicture->size());
+	}
 private slots:
 
 	/**

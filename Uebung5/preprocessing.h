@@ -52,5 +52,5 @@ public:
 
 	static QImage applyConvolution(QImage img, matrix<int> m, float div);
 
-	static QImage applyMorphologicOperation(QImage img, PreproType type, int size = 7, matrix<int> S = zero_matrix<int>(7, 7));
+	static QImage applyMorphologicOperation(QImage img, PreproType type, bool binary_img, int size = 7, matrix<int> S = zero_matrix<int>(7, 7));
 };

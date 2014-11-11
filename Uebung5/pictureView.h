@@ -1,3 +1,9 @@
+/**
+* @Copyright   2014
+* @Author  Petry Christian
+* @FHWS
+*/
+
 #pragma once
 
 #include <QtWidgets/QApplication>
@@ -23,6 +29,8 @@ public:
 	void setLastPosition(int x, int y);
 	void movePictureBy(int x, int y);
 	void scaleByAt(int delta, int x, int y);
+
+	void resetPosAndScale();
 
 private:
 	QGraphicsScene scene;

@@ -31,6 +31,14 @@ void pictureView::clear(){
 	scene_is_empty = true;
 }
 
+void pictureView::resetPosAndScale(){
+	scale_factor = 1;
+	pic_pos_x = 0;
+	pic_pos_y = 0;
+	last_pos_x = 0;
+	last_pos_y = 0;
+}
+
 void pictureView::mousePressEvent ( QMouseEvent * event ){
 	QWidget::setCursor(Qt::ClosedHandCursor);
 

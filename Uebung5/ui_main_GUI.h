@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
@@ -80,6 +81,8 @@ public:
     QSpacerItem *horizontalSpacer_2;
     QLabel *label;
     QSpinBox *sb_morph_size;
+    QSpacerItem *horizontalSpacer_7;
+    QCheckBox *cb_swapbw;
     QSpacerItem *horizontalSpacer_3;
     QWidget *Pictures;
     QHBoxLayout *horizontalLayout_2;
@@ -416,6 +419,15 @@ public:
 
         horizontalLayout_11->addWidget(sb_morph_size);
 
+        horizontalSpacer_7 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_11->addItem(horizontalSpacer_7);
+
+        cb_swapbw = new QCheckBox(page_2);
+        cb_swapbw->setObjectName(QStringLiteral("cb_swapbw"));
+
+        horizontalLayout_11->addWidget(cb_swapbw);
+
         horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_11->addItem(horizontalSpacer_3);
@@ -623,6 +635,7 @@ public:
         cb_filter->setProperty("currentText", QVariant(QString()));
         label_3->setText(QApplication::translate("main_GUI", "Values", 0));
         label->setText(QApplication::translate("main_GUI", "Size", 0));
+        cb_swapbw->setText(QApplication::translate("main_GUI", "swap binary values", 0));
         btn_loadPPM->setText(QApplication::translate("main_GUI", "Load", 0));
         lbl_filesize_load->setText(QApplication::translate("main_GUI", "File size:", 0));
         btn_pop->setText(QApplication::translate("main_GUI", ">> Pop ", 0));

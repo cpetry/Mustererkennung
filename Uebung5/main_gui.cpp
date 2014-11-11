@@ -1,6 +1,6 @@
 /**
- * @Copyright   2013
- * @Author  Matthias Karl, Hufnagel Stefan, Petry Christian
+ * @Copyright   2014
+ * @Author  Petry Christian
  * @FHWS
  */
 
@@ -66,6 +66,7 @@ main_GUI::main_GUI(){
 	connect(ui.lineEdit_filename, &QLineEdit::editingFinished, this, &main_GUI::slot_editingFilenameFinished);
 	connect(ui.sb_morph_size, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &main_GUI::slot_spinBoxValueChanged);
 	connect(ui.cb_filter, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged), this, &main_GUI::slot_filterChanged);
+	connect(ui.cb_swapbw, &QCheckBox::clicked, this, &main_GUI::slot_startEncodingPicture);
 	connect(ui.btn_loadPPM, &QPushButton::clicked, this, &main_GUI::slot_loadPicture);
 	connect(ui.btn_apply, &QPushButton::clicked, this, &main_GUI::slot_startEncodingPicture);
 
@@ -141,6 +142,9 @@ void main_GUI::slot_startCamera(){
 
 void main_GUI::slot_loadPicture(){
 	
+	this->leftView.resetPosAndScale();
+	this->rightView.resetPosAndScale();
+
 	this->left_image.load(ui.lineEdit_filename->text());
 	this->left_pixmap = QPixmap::fromImage(left_image);
 	this->leftView.setPixmap(this->left_pixmap);
@@ -234,15 +238,15 @@ void main_GUI::slot_startEncodingPicture(){
 		this->right_image = preprocessing::applyConvolution(this->left_image, m, div);
 	}
 	else if (type == preprocessing::SCHLIESSUNG){
-		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::DILATATION, ui.sb_morph_size->value(), matrix_S);
-		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::EROSION, ui.sb_morph_size->value(), matrix_S);
+		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::DILATATION, ui.cb_swapbw->isChecked(), ui.sb_morph_size->value(), matrix_S);
+		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::EROSION, ui.cb_swapbw->isChecked(), ui.sb_morph_size->value(), matrix_S);
 	}
 	else if (type == preprocessing::OEFFNUNG){
-		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::EROSION, ui.sb_morph_size->value(), matrix_S);
-		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::DILATATION, ui.sb_morph_size->value(), matrix_S);
+		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::EROSION, ui.cb_swapbw->isChecked(), ui.sb_morph_size->value(), matrix_S);
+		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::DILATATION, ui.cb_swapbw->isChecked(), ui.sb_morph_size->value(), matrix_S);
 	}
 	else{
-		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, type, ui.sb_morph_size->value());
+		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, type, ui.cb_swapbw->isChecked(), ui.sb_morph_size->value(), matrix_S);
 	}
 	
 
