@@ -9,7 +9,7 @@
 
 bool ascending(int i, int j) { return i > j; }
 bool descending(int i, int j) { return i < j; }
-QImage preprocessing::applyConvolution(QImage img, matrix<int> m, float div){
+QImage preprocessing::applyConvolution(QImage img, matrix<int> m, int mid_value, float div){
 	QImage newimg(img.width(), img.height(), QImage::Format::Format_RGB888);
 
 #pragma omp parallel for
@@ -26,7 +26,7 @@ QImage preprocessing::applyConvolution(QImage img, matrix<int> m, float div){
 				}
 
 			v *= div;
-			v = std::min(std::max(int(v), 0), 255); // clamp (0, 255)
+			v = std::min(std::max(int(v + mid_value), 0), 255); // clamp (0, 255)
 			newimg.setPixel(x, y, qRgb(v, v, v));
 		}
 	return newimg;

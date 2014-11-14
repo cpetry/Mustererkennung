@@ -48,7 +48,11 @@ main_GUI::main_GUI(){
 	this->ui.cb_filter->addItem("Mittelwert");
 	this->ui.cb_filter->addItem("Gauss");
 	this->ui.cb_filter->addItem("Sobel hori");
+	this->ui.cb_filter->addItem("Scharr hori");
 	this->ui.cb_filter->addItem("Sobel vert");
+	this->ui.cb_filter->addItem("Scharr vert");
+	this->ui.cb_filter->addItem("Sobel");
+	this->ui.cb_filter->addItem("Scharr");
 	this->ui.cb_filter->addItem("CUSTOM"); 
 	this->ui.cb_filter->addItem("Erosion");
 	this->ui.cb_filter->addItem("Dilatation");
@@ -219,9 +223,11 @@ void main_GUI::slot_startEncodingPicture(){
 
 	if (type == preprocessing::MITTELWERT
 		|| type == preprocessing::GAUSS
+		|| type == preprocessing::CUSTOM
 		|| type == preprocessing::SOBEL_HORI
 		|| type == preprocessing::SOBEL_VERT
-		|| type == preprocessing::CUSTOM){
+		|| type == preprocessing::SCHARR_HORI
+		|| type == preprocessing::SCHARR_VERT){
 	
 		matrix<int> m(3, 3);
 		m(0, 0) = this->ui.sb_11->value();
@@ -234,9 +240,43 @@ void main_GUI::slot_startEncodingPicture(){
 		m(2, 1) = this->ui.sb_32->value();
 		m(2, 2) = this->ui.sb_33->value();
 	
+		int med_value = 0;
+		if (type == preprocessing::SOBEL_HORI
+			|| type == preprocessing::SOBEL_VERT
+			|| type == preprocessing::SCHARR_HORI
+			|| type == preprocessing::SCHARR_VERT)
+			med_value = 128;
+
 		float div = 1.0 * this->ui.sb_div1->value() / (1.0 * this->ui.sb_div2->value());
-		this->right_image = preprocessing::applyConvolution(this->left_image, m, div);
+		this->right_image = preprocessing::applyConvolution(this->left_image, m, med_value, div);
 	}
+	else if (type == preprocessing::SOBEL
+		|| type == preprocessing::SCHARR){
+		matrix<int> m(3, 3);
+		m(0, 0) = this->ui.sb_11->value();
+		m(0, 1) = this->ui.sb_12->value();
+		m(0, 2) = this->ui.sb_13->value();
+		m(1, 0) = this->ui.sb_21->value();
+		m(1, 1) = this->ui.sb_22->value();
+		m(1, 2) = this->ui.sb_23->value();
+		m(2, 0) = this->ui.sb_31->value();
+		m(2, 1) = this->ui.sb_32->value();
+		m(2, 2) = this->ui.sb_33->value();
+
+		QImage vert = preprocessing::applyConvolution(this->left_image, m, 128, 1.0);
+		m = trans(m);
+		QImage hori = preprocessing::applyConvolution(this->left_image, m, 128, 1.0);
+
+		for (int y = 0; y < hori.height(); y++)
+		for (int x = 0; x < hori.width(); x++){
+			//sobel_hori.setPixel(x, y, std::sqrt(std::pow(qRed(sobel_vert.pixel(x, y)), 2) + std::pow(qRed(sobel_hori.pixel(x, y)), 2)));
+			int v = std::sqrt(std::pow(qRed(vert.pixel(x, y)) - 128, 2) + std::pow(qRed(hori.pixel(x, y)) - 128, 2));
+			v = std::min(std::max(int(v), 0), 255);
+			hori.setPixel(x, y, qRgb(v, v, v));
+		}
+		this->right_image = hori;
+	}
+	
 	else if (type == preprocessing::SCHLIESSUNG){
 		this->right_image = preprocessing::applyMorphologicOperation(this->left_image, preprocessing::DILATATION, ui.cb_swapbw->isChecked(), ui.sb_morph_size->value(), matrix_S);
 		this->right_image = preprocessing::applyMorphologicOperation(this->right_image, preprocessing::EROSION, ui.cb_swapbw->isChecked(), ui.sb_morph_size->value(), matrix_S);
@@ -296,11 +336,40 @@ void main_GUI::slot_filterChanged(const QString &text){
 	}
 	else if (text == "Sobel vert"){
 		int filter[9]{ 1, 2, 1, 0, 0, 0, -1, -2, -1};
+		int div[2]{1, 1};
+		bool readonly = true;
+		setfilter(filter, div, readonly);
+		ui.sw_options_stacked_widget->setCurrentIndex(0);
+	}
+	else if (text == "Sobel"){
+		int filter[9]{ 1, 2, 1, 0, 0, 0, -1, -2, -1};
+		int div[2]{1, 1};
+		bool readonly = true;
+		setfilter(filter, div, readonly);
+		ui.sw_options_stacked_widget->setCurrentIndex(2);
+	}
+	else if (text == "Scharr hori"){
+		int filter[9]{ 3, 0, -3, 10, 0, -10, 3, 0, -3};
 		int div[2]{ 1, 1};
 		bool readonly = true;
 		setfilter(filter, div, readonly);
 		ui.sw_options_stacked_widget->setCurrentIndex(0);
 	}
+	else if (text == "Scharr vert"){
+		int filter[9]{ 3, 10, 3, 0, 0, 0, -3, -10, -3};
+		int div[2]{1, 1};
+		bool readonly = true;
+		setfilter(filter, div, readonly);
+		ui.sw_options_stacked_widget->setCurrentIndex(0);
+	}
+	else if (text == "Scharr"){
+		int filter[9]{ 3, 10, 3, 0, 0, 0, -3, -10, -3};
+		int div[2]{1, 1};
+		bool readonly = true;
+		setfilter(filter, div, readonly);
+		ui.sw_options_stacked_widget->setCurrentIndex(2);
+	}
+	
 	else if (text == "Erosion"){
 		ui.sw_options_stacked_widget->setCurrentIndex(1);
 	}

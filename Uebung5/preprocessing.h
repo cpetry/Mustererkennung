@@ -13,6 +13,10 @@ public:
 		GAUSS,
 		SOBEL_HORI,
 		SOBEL_VERT,
+		SOBEL,
+		SCHARR_HORI,
+		SCHARR_VERT,
+		SCHARR,
 		CUSTOM,
 		EROSION,
 		DILATATION,
@@ -32,6 +36,14 @@ public:
 			return preprocessing::SOBEL_HORI;
 		else if (text_type == "Sobel vert")
 			return preprocessing::SOBEL_VERT;
+		else if (text_type == "Sobel")
+			return preprocessing::SOBEL;
+		else if (text_type == "Scharr hori")
+			return preprocessing::SCHARR_HORI;
+		else if (text_type == "Scharr vert")
+			return preprocessing::SCHARR_VERT;
+		else if (text_type == "Scharr")
+			return preprocessing::SCHARR;
 		else if (text_type == "CUSTOM")
 			return preprocessing::CUSTOM;
 		else if (text_type == "Erosion")
@@ -50,7 +62,7 @@ public:
 			return preprocessing::ERROR;
 	}
 
-	static QImage applyConvolution(QImage img, matrix<int> m, float div);
+	static QImage applyConvolution(QImage img, matrix<int> m, int mid_value, float div);
 
 	static QImage applyMorphologicOperation(QImage img, PreproType type, bool binary_img, int size = 7, matrix<int> S = zero_matrix<int>(7, 7));
 };

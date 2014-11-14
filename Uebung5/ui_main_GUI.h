@@ -84,6 +84,9 @@ public:
     QSpacerItem *horizontalSpacer_7;
     QCheckBox *cb_swapbw;
     QSpacerItem *horizontalSpacer_3;
+    QWidget *page_3;
+    QHBoxLayout *horizontalLayout_12;
+    QLabel *label_6;
     QWidget *Pictures;
     QHBoxLayout *horizontalLayout_2;
     QWidget *LeftSIde;
@@ -137,8 +140,8 @@ public:
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         verticalLayout_5 = new QVBoxLayout();
         verticalLayout_5->setSpacing(6);
-        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setSpacing(6);
         horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
@@ -248,8 +251,9 @@ public:
         page->setObjectName(QStringLiteral("page"));
         horizontalLayout_6 = new QHBoxLayout(page);
         horizontalLayout_6->setSpacing(6);
-        horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
+        horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setSpacing(6);
         horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
@@ -435,6 +439,18 @@ public:
         horizontalLayout_11->setStretch(1, 1);
         horizontalLayout_11->setStretch(2, 1);
         sw_options_stacked_widget->addWidget(page_2);
+        page_3 = new QWidget();
+        page_3->setObjectName(QStringLiteral("page_3"));
+        horizontalLayout_12 = new QHBoxLayout(page_3);
+        horizontalLayout_12->setSpacing(6);
+        horizontalLayout_12->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_12->setObjectName(QStringLiteral("horizontalLayout_12"));
+        label_6 = new QLabel(page_3);
+        label_6->setObjectName(QStringLiteral("label_6"));
+
+        horizontalLayout_12->addWidget(label_6);
+
+        sw_options_stacked_widget->addWidget(page_3);
 
         verticalLayout_7->addWidget(sw_options_stacked_widget);
 
@@ -457,8 +473,9 @@ public:
         Pictures->setMinimumSize(QSize(0, 290));
         horizontalLayout_2 = new QHBoxLayout(Pictures);
         horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
         LeftSIde = new QWidget(Pictures);
         LeftSIde->setObjectName(QStringLiteral("LeftSIde"));
         sizePolicy2.setHeightForWidth(LeftSIde->sizePolicy().hasHeightForWidth());
@@ -466,9 +483,10 @@ public:
         LeftSIde->setMinimumSize(QSize(283, 290));
         verticalLayout_2 = new QVBoxLayout(LeftSIde);
         verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         header_left = new QWidget(LeftSIde);
         header_left->setObjectName(QStringLiteral("header_left"));
         QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Minimum);
@@ -548,9 +566,10 @@ public:
         RightSide->setMinimumSize(QSize(283, 290));
         verticalLayout_3 = new QVBoxLayout(RightSide);
         verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         verticalLayout_3->setSizeConstraint(QLayout::SetDefaultConstraint);
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         header_right = new QWidget(RightSide);
         header_right->setObjectName(QStringLiteral("header_right"));
         sizePolicy3.setHeightForWidth(header_right->sizePolicy().hasHeightForWidth());
@@ -616,7 +635,7 @@ public:
 
         retranslateUi(main_GUI);
 
-        sw_options_stacked_widget->setCurrentIndex(1);
+        sw_options_stacked_widget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(main_GUI);
@@ -632,10 +651,11 @@ public:
         label_5->setText(QApplication::translate("main_GUI", "x", 0));
         groupBox_2->setTitle(QApplication::translate("main_GUI", "Options", 0));
         label_2->setText(QApplication::translate("main_GUI", "Filter", 0));
-        cb_filter->setProperty("currentText", QVariant(QString()));
+        cb_filter->setCurrentText(QString());
         label_3->setText(QApplication::translate("main_GUI", "Values", 0));
         label->setText(QApplication::translate("main_GUI", "Size", 0));
         cb_swapbw->setText(QApplication::translate("main_GUI", "swap binary values", 0));
+        label_6->setText(QString());
         btn_loadPPM->setText(QApplication::translate("main_GUI", "Load", 0));
         lbl_filesize_load->setText(QApplication::translate("main_GUI", "File size:", 0));
         btn_pop->setText(QApplication::translate("main_GUI", ">> Pop ", 0));
